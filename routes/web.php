@@ -24,4 +24,4 @@ Route::get('/logout', 'HomeController@logout')->name('logout');
 Route::get('/{anypath}', 'HomeController@index')->where('path','.*');
 
 // Category route here 
-Route::get('/add-category', 'CategoryController@addCategory');
+Route::post('/add-category', 'CategoryController@addCategory');

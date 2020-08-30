@@ -36,7 +36,7 @@
           </li>
           <li class="nav-item">
             <router-link to="/category-list" class="nav-link">
-              <i class="nav-icon fa fa-book-open"></i>
+              <i class="nav-icon fa fa-book"></i>
               <p>
                 Categories
               </p>
@@ -53,7 +53,7 @@
 
           <li class="nav-header">SETTINGS</li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('logout') }}" class="nav-link">
               <i class="nav-icon fa fa-power-off text-warning"></i>
               <p class="text">Logout</p>
             </a>
