@@ -44,3 +44,22 @@
     </section>
     </div>
 </template>
+
+<script>
+export default {
+    name:"List",
+
+    mounted() {
+
+    },
+
+    computed:{
+
+    },
+
+    methods: {
+
+  }
+ 
+}
+</script>
