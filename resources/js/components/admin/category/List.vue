@@ -18,14 +18,16 @@
                 <thead>
                 <tr>
                   <th width="10%">SL No</th>
-                  <th width="70%">Category Name</th>
+                  <th width="50%">Category Name</th>
+                  <th width="20%">Created At</th>
                   <th width="20%">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Bangladesh</td>
+                <tr v-for="(category,index) in getallCategory" :key="category.id">
+                  <td>{{ ++index }}</td>
+                  <td>{{ category.cat_name }}</td>
+                  <td>{{ category.created_at | timeformat }}</td>
                   <td>
                       <a href="" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> Edit</a>
                       <a href="" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>
@@ -50,11 +52,14 @@ export default {
     name:"List",
 
     mounted() {
-
+      this.$store.dispatch("allCategory")
     },
 
     computed:{
-
+      getallCategory(){
+        return this.$store.getters.getCategory
+        
+      }
     },
 
     methods: {

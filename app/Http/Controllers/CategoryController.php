@@ -17,4 +17,11 @@ class CategoryController extends Controller
         $category->save();
         return ['message'=>'ok'];
     }
+
+    public function allCategory(){
+        $categories = Category::latest()->get();
+        return response()->json([
+            'categories'=>$categories
+        ],200);
+    }
 }

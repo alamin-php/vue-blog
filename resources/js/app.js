@@ -5,10 +5,16 @@ window.Vue = require('vue');
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
-import storeData from "./store/index"
-const store = new Vuex.Store({
-    storeData
+//import moment
+import moment from 'moment';
+Vue.filter('timeformat', (arg) => {
+    return moment(arg).format("MMM Do YYYY");
 })
+
+import storeData from "./store/index"
+const store = new Vuex.Store(
+    storeData
+)
 
 // vue router import
 import VueRouter from 'vue-router'
@@ -52,7 +58,7 @@ window.Toast = Toast;
 
 const router = new VueRouter({
     routes, // short for `routes: routes`
-    mode: 'history',
+    mode: 'hash',
 })
 
 const app = new Vue({
