@@ -26,7 +26,6 @@ class CategoryController extends Controller
     }
 
     public function deleteCategory($id){
-        // return $id;
         $category = Category::find($id);
         $category->delete();
     }

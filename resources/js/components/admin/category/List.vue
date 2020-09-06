@@ -72,6 +72,9 @@ export default {
               title: 'Category deleted in successfully'
             })
         })
+        .catch(() =>{
+          console.log('Sorry! category not deleted. Some internal error')
+        })
       }
   }
  
