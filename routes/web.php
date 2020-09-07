@@ -13,8 +13,11 @@ Route::get('/logout', 'HomeController@logout')->name('logout');
 // Route::get('/{anypath}', 'HomeController@index')->where('path','.*');
 
 // Category route here 
-Route::post('/add-category', 'CategoryController@addCategory');
 Route::get('/category', 'CategoryController@allCategory');
+Route::post('/add-category', 'CategoryController@addCategory');
 Route::get('/category/{id}', 'CategoryController@deleteCategory');
 Route::get('/edit-category/{id}', 'CategoryController@editCategory');
 Route::post('/update-category/{id}', 'CategoryController@updateCategory');
+
+// Post route here 
+Route::get('/post', 'PostController@allPost');
