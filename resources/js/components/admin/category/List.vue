@@ -18,8 +18,9 @@
                 <thead>
                 <tr>
                   <th width="10%">SL No</th>
-                  <th width="50%">Category Name</th>
-                  <th width="20%">Created At</th>
+                  <th width="40%">Category Name</th>
+                  <th width="15%">Created At</th>
+                  <th width="15%">Updated At</th>
                   <th width="20%">Action</th>
                 </tr>
                 </thead>
@@ -28,9 +29,10 @@
                   <td>{{ ++index }}</td>
                   <td>{{ category.cat_name }}</td>
                   <td>{{ category.created_at | timeformat }}</td>
+                  <td>{{ category.updated_at | timeformat }}</td>
                   <td>
-                      <a href="" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> Edit</a>
-                      <a href="" @click.prevent="deletecategory(category.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>
+                      <router-link :to="`/edit-category/${category.id}`" class="btn btn-primary btn-sm">Edit</router-link>
+                      <a href="" @click.prevent="deletecategory(category.id)" class="btn btn-danger btn-sm">Delete</a>
                   </td>
                 </tr>
                 </tbody>

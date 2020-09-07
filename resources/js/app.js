@@ -6,7 +6,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 //support moment
-import {filter} from './filter'
+import { filter } from './filter'
 
 import storeData from "./store/index"
 const store = new Vuex.Store(
