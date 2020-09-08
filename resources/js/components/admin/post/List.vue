@@ -28,19 +28,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>User Name</td>
-                  <td>Bangladesh</td>
-                  <td>Islam is best</td>
-                  <td>Post details</td>
-                  <td>Photo Name</td>
-                  <td>20 Sep 2020</td>
+                <tr v-for="(post,index) in getallPost" :key="post.id">
+                  <td>{{ ++index }}</td>
+                  <td v-if="post.user">{{ post.user.name }}</td>
+                  <td v-else>No User</td>
+                  <td v-if="post.category">{{ post.category.cat_name }}</td>
+                  <td v-else>No Category</td>
+                  <td>{{ post.title }}</td>
+                  <td>{{ post.description | sortlength(40, "...")}}</td>
+                  <td><img :src="post.photo" alt="photo" width="40" height="40"></td>
+                   <td>{{ post.created_at | timeformat }}</td>
                   <td>
                         <a href="" class=" btn btn-primary btn-sm"> Edit</a>
-                        <a href="" class=" btn btn-danger btn-sm"> Delete</a>
-                      <!-- <router-link :to="`/edit-category/${category.id}`" class="btn btn-primary btn-sm">Edit</router-link>
-                      <a href="" @click.prevent="deletecategory(category.id)" class="btn btn-danger btn-sm">Delete</a> -->
+                        <!-- <a href="" class=" btn btn-danger btn-sm"> Delete</a> -->
+                      <!-- <router-link :to="`/edit-category/${category.id}`" class="btn btn-primary btn-sm">Edit</router-link> -->
+                      <a href="" @click.prevent="deletePost(post.id)" class="btn btn-danger btn-sm">Delete</a>
                   </td>
                 </tr>
                 </tbody>
@@ -62,30 +64,30 @@ export default {
     name:"List",
 
     mounted() {
-      // this.$store.dispatch("allCategory")
+      this.$store.dispatch("allPost")
     },
 
     computed:{
-      // getallCategory(){
-      //   return this.$store.getters.getCategory
+      getallPost(){
+        return this.$store.getters.getPost
         
-      // }
+      }
     },
 
     methods: {
-      // deletecategory(id){
-      //   axios.get('/category/'+id)
-      //   .then(() =>{
-      //         this.$store.dispatch("allCategory")
-      //         Toast.fire({
-      //         icon: 'success',
-      //         title: 'Category deleted in successfully'
-      //       })
-      //   })
-      //   .catch(() =>{
-      //     console.log('Sorry! category not deleted. Some internal error')
-      //   })
-      // }
+      deletePost(id){
+        axios.get('/post/'+id)
+        .then(() =>{
+              this.$store.dispatch("allPost")
+              Toast.fire({
+              icon: 'success',
+              title: 'Post deleted in successfully'
+            })
+        })
+        .catch(() =>{
+          console.log('Sorry! post not deleted. Some internal error')
+        })
+      }
   }
  
 }

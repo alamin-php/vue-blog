@@ -21,3 +21,4 @@ Route::post('/update-category/{id}', 'CategoryController@updateCategory');
 
 // Post route here 
 Route::get('/post', 'PostController@allPost');
+Route::get('/post/{id}', 'PostController@deletePost');

@@ -2245,27 +2245,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "List",
-  mounted: function mounted() {// this.$store.dispatch("allCategory")
+  mounted: function mounted() {
+    this.$store.dispatch("allPost");
   },
-  computed: {// getallCategory(){
-    //   return this.$store.getters.getCategory
-    // }
+  computed: {
+    getallPost: function getallPost() {
+      return this.$store.getters.getPost;
+    }
   },
-  methods: {// deletecategory(id){
-    //   axios.get('/category/'+id)
-    //   .then(() =>{
-    //         this.$store.dispatch("allCategory")
-    //         Toast.fire({
-    //         icon: 'success',
-    //         title: 'Category deleted in successfully'
-    //       })
-    //   })
-    //   .catch(() =>{
-    //     console.log('Sorry! category not deleted. Some internal error')
-    //   })
-    // }
+  methods: {
+    deletePost: function deletePost(id) {
+      var _this = this;
+
+      axios.get('/post/' + id).then(function () {
+        _this.$store.dispatch("allPost");
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Post deleted in successfully'
+        });
+      })["catch"](function () {
+        console.log('Sorry! post not deleted. Some internal error');
+      });
+    }
   }
 });
 
@@ -63767,7 +63773,87 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(0)
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "table",
+                {
+                  staticClass: "table table-bordered table-hover text-center",
+                  attrs: { id: "example1" }
+                },
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.getallPost, function(post, index) {
+                      return _c("tr", { key: post.id }, [
+                        _c("td", [_vm._v(_vm._s(++index))]),
+                        _vm._v(" "),
+                        post.user
+                          ? _c("td", [_vm._v(_vm._s(post.user.name))])
+                          : _c("td", [_vm._v("No User")]),
+                        _vm._v(" "),
+                        post.category
+                          ? _c("td", [_vm._v(_vm._s(post.category.cat_name))])
+                          : _c("td", [_vm._v("No Category")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(post.title))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(
+                              _vm._f("sortlength")(post.description, 40, "...")
+                            )
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("img", {
+                            attrs: {
+                              src: post.photo,
+                              alt: "photo",
+                              width: "40",
+                              height: "40"
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("timeformat")(post.created_at)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: " btn btn-primary btn-sm",
+                              attrs: { href: "" }
+                            },
+                            [_vm._v(" Edit")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-danger btn-sm",
+                              attrs: { href: "" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.deletePost(post.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Delete")]
+                          )
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                ]
+              )
+            ])
           ])
         ])
       ])
@@ -63779,73 +63865,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-body" }, [
-      _c(
-        "table",
-        {
-          staticClass: "table table-bordered table-hover text-center",
-          attrs: { id: "example1" }
-        },
-        [
-          _c("thead", [
-            _c("tr", [
-              _c("th", [_vm._v("SL No")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("User Name")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Category Name")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Post Title")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Post Details")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Photo")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Created At")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Action")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tbody", [
-            _c("tr", [
-              _c("td", [_vm._v("1")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("User Name")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("Bangladesh")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("Islam is best")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("Post details")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("Photo Name")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("20 Sep 2020")]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "a",
-                  {
-                    staticClass: " btn btn-primary btn-sm",
-                    attrs: { href: "" }
-                  },
-                  [_vm._v(" Edit")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: " btn btn-danger btn-sm",
-                    attrs: { href: "" }
-                  },
-                  [_vm._v(" Delete")]
-                )
-              ])
-            ])
-          ])
-        ]
-      )
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("SL No")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("User Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Category Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Post Title")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Post Details")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Photo")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Created At")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
+      ])
     ])
   }
 ]
@@ -80858,6 +80895,9 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.filter('timeformat', function (arg) {
   return moment__WEBPACK_IMPORTED_MODULE_0___default()(arg).format("MMM Do YYYY");
 });
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.filter('sortlength', function (text, length, suffix) {
+  return text.substring(0, length) + suffix;
+});
 
 /***/ }),
 
@@ -80915,22 +80955,34 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
-    category: []
+    category: [],
+    post: []
   },
   getters: {
     getCategory: function getCategory(state) {
       return state.category;
+    },
+    getPost: function getPost(state) {
+      return state.post;
     }
   },
   mutations: {
     categories: function categories(state, data) {
       return state.category = data;
+    },
+    posts: function posts(state, data) {
+      return state.post = data;
     }
   },
   actions: {
     allCategory: function allCategory(context) {
       axios.get('/category').then(function (response) {
         context.commit('categories', response.data.categories);
+      });
+    },
+    allPost: function allPost(context) {
+      axios.get('/post').then(function (response) {
+        context.commit('posts', response.data.posts);
       });
     }
   }
