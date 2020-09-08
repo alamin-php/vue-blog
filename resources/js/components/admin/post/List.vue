@@ -8,7 +8,7 @@
               <h3 class="card-title">Post List</h3>
               <div class="card-tools">
                   <button class="btn btn-primary"> 
-                    <router-link to="/add-category" class="text-white"><i class="fa fa-plus-circle"></i> Add Post</router-link>
+                    <router-link to="/add-post" class="text-white"><i class="fa fa-plus-circle"></i> Add Post</router-link>
                   </button>
               </div>
             </div>
@@ -36,7 +36,7 @@
                   <td v-else>No Category</td>
                   <td>{{ post.title }}</td>
                   <td>{{ post.description | sortlength(40, "...")}}</td>
-                  <td><img :src="post.photo" alt="photo" width="40" height="40"></td>
+                  <td><img :src="post.picture" alt="photo" width="64" height="64"></td>
                    <td>{{ post.created_at | timeformat }}</td>
                   <td>
                         <a href="" class=" btn btn-primary btn-sm"> Edit</a>
