@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('public/index');
 });
 
 Auth::routes();
@@ -21,4 +21,10 @@ Route::post('/update-category/{id}', 'CategoryController@updateCategory');
 
 // Post route here 
 Route::get('/post', 'PostController@allPost');
+Route::post('/add-post', 'PostController@addPost');
 Route::get('/post/{id}', 'PostController@deletePost');
+Route::get('/edit-post/{id}', 'PostController@editPost');
+Route::post('/update-post/{id}', 'PostController@updatePost');
+
+// Frontend route 
+Route::get('/blogpost', 'BlogController@getAllBlogPost');

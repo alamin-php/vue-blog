@@ -54,7 +54,9 @@ export default {
     name:"List",
 
     mounted() {
+      this.$Progress.start()
       this.$store.dispatch("allCategory")
+      this.$Progress.finish()
     },
 
     computed:{
@@ -65,19 +67,38 @@ export default {
     },
 
     methods: {
-      deletecategory(id){
-        axios.get('/category/'+id)
-        .then(() =>{
+    deletecategory(id) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+          if (result.value) {
+            this.$Progress.start()
+            axios.get('/category/'+id)
+            .then(() => {
+              Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+              )
               this.$store.dispatch("allCategory")
-              Toast.fire({
-              icon: 'success',
-              title: 'Category deleted in successfully'
+              this.$Progress.finish()
+            }).catch(() => {
+              Swal.fire(
+              'Sorry!',
+              'Your file Not deleted. You are not Permited',
+              'error'
+              )
+              this.$Progress.fail()
             })
-        })
-        .catch(() =>{
-          console.log('Sorry! category not deleted. Some internal error')
-        })
-      }
+          }
+      })
+    },
   }
  
 }

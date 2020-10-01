@@ -36,12 +36,12 @@
                   <td v-else>No Category</td>
                   <td>{{ post.title }}</td>
                   <td>{{ post.description | sortlength(40, "...")}}</td>
-                  <td><img :src="post.picture" alt="photo" width="64" height="64"></td>
+                  <td><img :src="ourImage(post.picture)" alt="photo" width="64" height="64"></td>
                    <td>{{ post.created_at | timeformat }}</td>
                   <td>
-                        <a href="" class=" btn btn-primary btn-sm"> Edit</a>
+                        <!-- <a href="" class=" btn btn-primary btn-sm"> Edit</a> -->
                         <!-- <a href="" class=" btn btn-danger btn-sm"> Delete</a> -->
-                      <!-- <router-link :to="`/edit-category/${category.id}`" class="btn btn-primary btn-sm">Edit</router-link> -->
+                      <router-link :to="`/edit-post/${post.id}`" class="btn btn-primary btn-sm">Edit</router-link>
                       <a href="" @click.prevent="deletePost(post.id)" class="btn btn-danger btn-sm">Delete</a>
                   </td>
                 </tr>
@@ -64,7 +64,9 @@ export default {
     name:"List",
 
     mounted() {
+      this.$Progress.start()
       this.$store.dispatch("allPost")
+      this.$Progress.finish()
     },
 
     computed:{
@@ -75,19 +77,42 @@ export default {
     },
 
     methods: {
-      deletePost(id){
-        axios.get('/post/'+id)
-        .then(() =>{
+      ourImage(img){
+        return "upload/"+img;
+      },
+
+    deletePost(id) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+          if (result.value) {
+            this.$Progress.start()
+            axios.get('/post/'+id)
+            .then(() => {
+              Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+              )
               this.$store.dispatch("allPost")
-              Toast.fire({
-              icon: 'success',
-              title: 'Post deleted in successfully'
+              this.$Progress.finish()
+            }).catch(() => {
+              Swal.fire(
+              'Sorry!',
+              'Your file Not deleted. You are not Permited',
+              'error'
+              )
+              this.$Progress.fail()
             })
-        })
-        .catch(() =>{
-          console.log('Sorry! post not deleted. Some internal error')
-        })
-      }
+          }
+      })
+    },
   }
  
 }
