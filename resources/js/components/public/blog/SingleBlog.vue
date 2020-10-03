@@ -24,25 +24,23 @@
           <div class="span8">
             <article>
               <div class="row">
-<div class="span8">
+              <div class="span8">
                   <div class="post-image">
                     <div class="post-heading">
-                      <h3><a href="#">This is an example of standard post format {{ this.$route.params.id }}</a></h3>
-                    </div>
-                    <img src="#" alt="">
+                      <h3><a href="#"> {{ singlepost.title }}</a></h3>
+                      </div>
+                    <img :src="`upload/${singlepost.picture}`" alt=""/>
                   </div>
                   <p>
-                    Qui ut ceteros comprehensam. Cu eos sale sanctus eligendi, id ius elitr saperet, ocurreret pertinacia pri an. No mei nibh consectetuer, semper laoreet perfecto ad qui, est rebum nulla argumentum ei. Fierent adipisci iracundia est ei, usu timeam persius
-                    ea. Usu ea justo malis, pri quando everti electram ei, ex homero omittam salutatus sed.
+                    {{ singlepost.description}}
                   </p>
                   <div class="bottom-article">
                     <ul class="meta-post">
-                      <li><i class="icon-calendar"></i><a href="#"> Mar 23, 2013</a></li>
-                      <li><i class="icon-user"></i><a href="#"> Admin</a></li>
-                      <li><i class="icon-folder-open"></i><a href="#"> Blog</a></li>
+                      <li><i class="icon-calendar"></i><a href="#">{{ singlepost.created_at | timeformat }}</a></li>
+                      <li v-if="singlepost.user"><i class="icon-user"></i><a href="#"> {{ singlepost.user.name }}</a></li>
+                      <li v-if="singlepost.category"><i class="icon-folder-open"></i><a href="#"> {{ singlepost.category.cat_name }}</a></li>
                       <li><i class="icon-comments"></i><a href="#">4 Comments</a></li>
                     </ul>
-                    <a href="#" class="pull-right">Continue reading <i class="icon-angle-right"></i></a>
                   </div>
                 </div>
               </div>
@@ -64,10 +62,12 @@ export default {
         BlogSidebar
     },
     mounted(){
-
+      this.$store.dispatch("getPostById", this.$route.params.id)
     },
     computed:{
-      
+      singlepost(){
+        return this.$store.getters.singlepost
+      }
     },
     methods: {
 

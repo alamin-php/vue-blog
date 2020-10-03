@@ -2819,16 +2819,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SingleBlog",
   components: {
     BlogSidebar: _BlogSidebar_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  mounted: function mounted() {},
-  computed: {},
+  mounted: function mounted() {
+    this.$store.dispatch("getPostById", this.$route.params.id);
+  },
+  computed: {
+    singlepost: function singlepost() {
+      return this.$store.getters.singlepost;
+    }
+  },
   methods: {}
 });
 
@@ -87436,24 +87440,63 @@ var render = function() {
                       _c("div", { staticClass: "post-heading" }, [
                         _c("h3", [
                           _c("a", { attrs: { href: "#" } }, [
-                            _vm._v(
-                              "This is an example of standard post format " +
-                                _vm._s(this.$route.params.id)
-                            )
+                            _vm._v(" " + _vm._s(_vm.singlepost.title))
                           ])
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("img", { attrs: { src: "#", alt: "" } })
+                      _c("img", {
+                        attrs: {
+                          src: "upload/" + _vm.singlepost.picture,
+                          alt: ""
+                        }
+                      })
                     ]),
                     _vm._v(" "),
                     _c("p", [
                       _vm._v(
-                        "\n                    Qui ut ceteros comprehensam. Cu eos sale sanctus eligendi, id ius elitr saperet, ocurreret pertinacia pri an. No mei nibh consectetuer, semper laoreet perfecto ad qui, est rebum nulla argumentum ei. Fierent adipisci iracundia est ei, usu timeam persius\n                    ea. Usu ea justo malis, pri quando everti electram ei, ex homero omittam salutatus sed.\n                  "
+                        "\n                 " +
+                          _vm._s(_vm.singlepost.description) +
+                          "\n               "
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(1)
+                    _c("div", { staticClass: "bottom-article" }, [
+                      _c("ul", { staticClass: "meta-post" }, [
+                        _c("li", [
+                          _c("i", { staticClass: "icon-calendar" }),
+                          _c("a", { attrs: { href: "#" } }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm._f("timeformat")(_vm.singlepost.created_at)
+                              )
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _vm.singlepost.user
+                          ? _c("li", [
+                              _c("i", { staticClass: "icon-user" }),
+                              _c("a", { attrs: { href: "#" } }, [
+                                _vm._v(" " + _vm._s(_vm.singlepost.user.name))
+                              ])
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.singlepost.category
+                          ? _c("li", [
+                              _c("i", { staticClass: "icon-folder-open" }),
+                              _c("a", { attrs: { href: "#" } }, [
+                                _vm._v(
+                                  " " + _vm._s(_vm.singlepost.category.cat_name)
+                                )
+                              ])
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm._m(1)
+                      ])
+                    ])
                   ])
                 ])
               ])
@@ -87508,33 +87551,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "bottom-article" }, [
-      _c("ul", { staticClass: "meta-post" }, [
-        _c("li", [
-          _c("i", { staticClass: "icon-calendar" }),
-          _c("a", { attrs: { href: "#" } }, [_vm._v(" Mar 23, 2013")])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("i", { staticClass: "icon-user" }),
-          _c("a", { attrs: { href: "#" } }, [_vm._v(" Admin")])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("i", { staticClass: "icon-folder-open" }),
-          _c("a", { attrs: { href: "#" } }, [_vm._v(" Blog")])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("i", { staticClass: "icon-comments" }),
-          _c("a", { attrs: { href: "#" } }, [_vm._v("4 Comments")])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "pull-right", attrs: { href: "#" } }, [
-        _vm._v("Continue reading "),
-        _c("i", { staticClass: "icon-angle-right" })
-      ])
+    return _c("li", [
+      _c("i", { staticClass: "icon-comments" }),
+      _c("a", { attrs: { href: "#" } }, [_vm._v("4 Comments")])
     ])
   }
 ]
@@ -105118,7 +105137,8 @@ __webpack_require__.r(__webpack_exports__);
   state: {
     category: [],
     post: [],
-    blogpost: []
+    blogpost: [],
+    singlepost: []
   },
   getters: {
     getCategory: function getCategory(state) {
@@ -105129,6 +105149,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     getblogpost: function getblogpost(state) {
       return state.blogpost;
+    },
+    singlepost: function singlepost(state) {
+      return state.singlepost;
     }
   },
   mutations: {
@@ -105140,6 +105163,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     getblogpost: function getblogpost(state, data) {
       return state.blogpost = data;
+    },
+    singlepost: function singlepost(state, data) {
+      return state.singlepost = data;
     }
   },
   actions: {
@@ -105156,6 +105182,11 @@ __webpack_require__.r(__webpack_exports__);
     getblogpost: function getblogpost(context) {
       axios.get('/blogpost').then(function (response) {
         context.commit('getblogpost', response.data.posts);
+      });
+    },
+    getPostById: function getPostById(context, payload) {
+      axios.get('/singlepost/' + payload).then(function (response) {
+        context.commit('singlepost', response.data.post);
       });
     }
   }

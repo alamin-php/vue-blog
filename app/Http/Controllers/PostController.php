@@ -42,6 +42,14 @@ class PostController extends Controller
         $post->save();
         return ['message'=>'ok'];
     }
+
+    public function editPost($id)
+    {
+        $post = Post::find($id);
+        return response()->json([
+            'post' => $post
+        ], 200);
+    }
     
     public function updatePost(Request $request, $id){
         $post = Post::find($id);
@@ -77,14 +85,6 @@ class PostController extends Controller
         $post->save();
         return ['message'=>'ok'];
     }
-
-        public function editPost($id){
-            $post = Post::find($id);
-            return response()->json([
-                'post'=>$post
-            ],200);
-        }
-
 
         public function deletePost($id){
             $post = Post::find($id);

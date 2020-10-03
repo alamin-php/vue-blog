@@ -28,3 +28,4 @@ Route::post('/update-post/{id}', 'PostController@updatePost');
 
 // Frontend route 
 Route::get('/blogpost', 'BlogController@getAllBlogPost');
+Route::get('/singlepost/{id}', 'BlogController@getpost_by_id');
